@@ -13,7 +13,7 @@ import Board from './board';
 import { Button } from '@/components/ui/button';
 
 const Page = () => {
-	const [turn, setTurn] = React.useState("Players");
+	const [turn, setTurn] = React.useState("Start Please");
 	const [isAllowedToReset, setIsAllowedToReset] = React.useState(false);
 	const [onResetClicked, setOnResetClicked] = React.useState<boolean>(false);
   return (
@@ -24,7 +24,7 @@ const Page = () => {
           <CardDescription>......</CardDescription>
         </CardHeader>
         <CardContent>
-          <Board setTurn={setTurn} setIsAllowedToReset={setIsAllowedToReset} setOnResetClicked={setOnResetClicked} onResetClicked={onResetClicked} />
+          <Board setTurn={setTurn} turn={turn} setIsAllowedToReset={setIsAllowedToReset} setOnResetClicked={setOnResetClicked} onResetClicked={onResetClicked} />
         </CardContent>
 				<CardFooter>
 					<Button className='w-full' disabled={!isAllowedToReset} onClick={()=>{
