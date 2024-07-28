@@ -1,3 +1,4 @@
+
 'use client'
 import React, { useEffect } from 'react';
 import c from './cross';
@@ -44,11 +45,6 @@ function cheackDraw(positions: CellValue[]) {
 	return positions.every((value) => value !== CellValue.None);
 }
 
-function bootMove(positions: CellValue[]) {
-	const emptyCells = positions.map((value, index) => value === CellValue.None ? index : -1).filter((value) => value !== -1);
-	const randomIndex = Math.floor(Math.random() * emptyCells.length);
-	return emptyCells[randomIndex];
-}
 
 
 
@@ -76,10 +72,10 @@ const Board = (props: {
 		});
 		if (currentPlayer === CellValue.X) {
 			setCurrentPlayer(CellValue.O);
-			setTurn("Bot");
+			setTurn("Player 2");
 		} else {
 			setCurrentPlayer(CellValue.X);
-			setTurn("Player");
+			setTurn("Player 1");
 		}
 	};
 
@@ -91,7 +87,6 @@ const Board = (props: {
 		const c = (checkWinner(positions, CellValue.X) != null) ? CellValue.X : (checkWinner(positions, CellValue.O) != null) ? CellValue.O : CellValue.None;
 
 		if (c !== CellValue.None) {
-			route.push('/error');
 			const temp = checkWinner(positions, c)!;
 			setWiningPositions(temp);
 			setCurrentPlayer(CellValue.X);
@@ -106,18 +101,11 @@ const Board = (props: {
 			setIsAllowedToReset(false);
 			setPositions(Array<CellValue>(9).fill(CellValue.None));
 			setCurrentPlayer(CellValue.X);
-			setTurn("Player");
+			setTurn("Player 1");
 			setOnResetClicked(false);
 			setWiningPositions([]);
 		}
-		if (currentPlayer === CellValue.O) {
-			const index = bootMove(positions);
-			setTimeout(() => {
-				handleClick(index, 0);
-				setCurrentPlayer(CellValue.X);
-			}, 500);
-		}
-	}, [onResetClicked, positions, setIsAllowedToReset, setOnResetClicked, setTurn]);
+	}, [onResetClicked, positions, route, setIsAllowedToReset, setOnResetClicked, setTurn]);
 	return (
 		<div className='grid grid-rows-3 items-center'>
 			<Alert open={hasWon} setOpen={setHasWon} winner={turn} />
